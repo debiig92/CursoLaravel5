@@ -20,5 +20,3 @@ Route::get('admin','FrontController@admin');
 Route::resource('usuario','UsuarioController');
 
 
-Route::post('login', 'AuthController@Login');
-Route::get('logout', 'AuthController@Logout');

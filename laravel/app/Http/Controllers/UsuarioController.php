@@ -8,9 +8,17 @@ use Cinema\User;
 use Session;
 use Redirect;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 
 class UsuarioController extends Controller {
+	
+	public function __construct(){
+		$this->beforeFilter('@find',['only' => ['edit','update','destroy']]);
+	}
 
+	public function find(Route $route){
+		$this->user = User::find($route->getParameter('usuario'));
+	}
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -39,13 +47,10 @@ class UsuarioController extends Controller {
 	 */
 	public function store(UserCreateRequest $request)
 	{	
-		User::create([
-			'name' => $request['name'],
-			'email' => $request ['email'],
-			'password' =>  $request['password'],
-			]);
+		User::create($request->all());
 
-		return redirect('/usuario')->with('message','store');
+		Session::flash('message','Usuario Editado Correctamente');
+		return Redirect::to('/usuario');
 	}
 
 	/**
@@ -65,10 +70,9 @@ class UsuarioController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit()
 	{
-		$user = User::find($id);
-		return view('usuario.edit',['user'=>$user]);
+		return view('usuario.edit',['user'=>$this->user]);
 	}
 
 	/**
@@ -77,13 +81,12 @@ class UsuarioController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id, UserUpdateRequest $request)
+	public function update(UserUpdateRequest $request)
 	{
-		$user = User::find($id);
-		$user->fill($request->all());
-		$user->save();
+		$this->user->fill($request->all());
+		$this->user->save();
 
-		Session::flash('message','Usuario Editado Correctament');
+		Session::flash('message','Usuario Editado Correctamente');
 		return Redirect::to('/usuario');
 	}
 
@@ -93,11 +96,10 @@ class UsuarioController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy()
 	{
-		$user = User::find($id);
-		$user->delete();
-		Session::flash('message','Usuario Eliminado Correctament');
+		$this->user->delete();
+		Session::flash('message','Usuario Eliminado Correctamente');
 		return Redirect::to('/usuario');
 	}
 
