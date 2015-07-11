@@ -6,7 +6,7 @@
 <!-- Custom Theme files -->
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <!-- Custom Theme files -->
-<script src="js/jquery.min.js"></script>
+{!!Html::script('js/jquery.min.js')!!}
 <!-- Custom Theme files -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -73,6 +73,8 @@
 			});
 			});
 		</script>
-		<script type="text/javascript" src="js/jquery.flexisel.js"></script>	
+		<script type="text/javascript" src="js/jquery.flexisel.js"></script>
+		{!!Html::script('js/bootstrap.min.js')!!}
+
 </body>
 </html>
